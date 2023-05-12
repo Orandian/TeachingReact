@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import RootLayout from "./components/layouts/RootLayout";
+import ErrorPage from "./components/layouts/ErrorPage";
+import MyFirstPage from './pages/MyFirstPage'
+import MySecondPage from './pages/MySecondPage'
+import MyFirstPageInside from "./pages/MyFirstPageInside";
+import MySecondPageInside from "./pages/MySecondPageInside";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <RootLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        {index: true, element: <MyFirstPage /> },
+        {path: 'firstPageInside', element: <MyFirstPageInside /> }
+      ]
+    },
+    {
+      path: '/secondPage',
+      element: <RootLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        {index: true, element: <MySecondPage /> },
+        {path: 'secondPageInside', element: <MySecondPageInside /> }
+      ]
+    }
+  ])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 
